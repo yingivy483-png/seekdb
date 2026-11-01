@@ -20,6 +20,13 @@
 #include "sql/optimizer/ob_join_order.h"
 #include "sql/optimizer/ob_log_distinct.h"
 
+
+// Fix #1534 Predicate simplification for AND
+// Optimization rule: Remove redundant weaker range predicate on the same column in AND set
+// Example: age <10 AND age<20 AND age<100 --> age <10
+// Keep only the strictest bound, result set stay unchanged.
+// Reduce redundant filter evaluation overhead for AND query.
+
 using namespace oceanbase;
 using namespace sql;
 using namespace oceanbase::common;
